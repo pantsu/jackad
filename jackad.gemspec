@@ -15,8 +15,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Jackad::VERSION
 
-  gem.add_dependency('net-ldap')
+  gem.add_dependency 'net-ldap', '~>0.2.0'
 
-  gem.add_development_dependency('rspec')
+  #gem.add_development_dependency('rspec')
 
 end
