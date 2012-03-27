@@ -30,13 +30,15 @@ module Jackad
     # Returns binary Net::BER::BerIdentifiedString
     def get_entry_guid(username)
       filter = Net::LDAP::Filter.eq(@attribute.to_s, username)
-      @ldap.search(filter: filter, attributes: ['objectguid'], size: 1)[0]['objectguid'][0]
+      result = @ldap.search(filter: filter, attributes: ['objectguid'], size: 1)
+      result.size > 0 ? result[0]['objectguid'][0] : nil
     end
 
     # Gets user guid from LDAP.
     # Returns string.
     def get_entry_guid_as_string(username)
-      get_entry_guid(username).unpack('H*')[0].upcase
+      username = get_entry_guid(username)
+      username.unpack('H*')[0].upcase unless username.nil?
     end
 
   end
