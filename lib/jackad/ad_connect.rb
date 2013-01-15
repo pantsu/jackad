@@ -4,14 +4,15 @@ module Jackad
     attr_reader :ldap, :attribute
 
     def initialize(params = {})
+      options = Jackad::Config.setup
 
       @ldap = Net::LDAP.new(params)
-      @ldap.host = LDAP_CONFIG[:host]
-      @ldap.port = LDAP_CONFIG[:port]
-      @ldap.base = LDAP_CONFIG[:base]
-      @attribute = params[:attribute] || LDAP_CONFIG[:attribute]
-      @login = params[:login] || LDAP_CONFIG[:admin_user]
-      @password = params[:password] || LDAP_CONFIG[:admin_password]
+      @ldap.host = options[:host]
+      @ldap.port = options[:port]
+      @ldap.base = options[:base]
+      @attribute = params[:attribute] || options[:attribute]
+      @login = params[:login] || options[:admin_user]
+      @password = params[:password] || options[:admin_password]
 
       @ldap.auth @login, @password
 
