@@ -10,31 +10,33 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
-Or install it yourself as:
+Or install it alone with:
 
     $ gem install jackad
 
+Configure your AD connection with YAML file `/usr/local/jackad/ldap.yml`
+
+    :host: 'example.com'
+    :port: 389
+    :base: 'dc=example,dc=com'
+    :attribute: 'sAMAccountName'
+    :method: 'simple'
+    :ssl: false
+    :admin: false
+    :admin_user: 'admin_username'           # Only if admin:true needed
+    :admin_password: 'admin_password'       # Only if admin:true needed
+
 ## Usage
 
-Configure your AD connection with
+Jackad gives you simple API to access your LDAP directory. All self methods return true or false
 
+    Jackad.credentials_valid?('username@example.com', 'user_ldap_password')     # Check validity of username and password
 
-    module Jackad
+    Jackad.entry_exists?('username')                                            # Check user existance by configured attribute
 
-      LDAP_CONFIG = { host: 'example.com',
-                port: 389,
-                base: 'dc=example,dc=com',
-                attribute: 'sAMAccountName',
-                admin_user: 'admin_username',
-                admin_password: 'admin_password',
-                method: 'simple',
-                ssl: false,
-                admin: false
-                }
-
-    end
+    Jackad.entry_valid?(username)                                               # Check user validity by configured attribute, useraccountcontrol flags and pwdlastset attribute
 
 ## Contributing
 
