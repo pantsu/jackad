@@ -15,7 +15,7 @@ module Jackad
   def self.entry_exists?(username)
     ad = AdConnect.new
     filter = Net::LDAP::Filter.eq(ad.attribute.to_s, username)
-    ad.ldap.search(filter: filter, size: 1).size > 0 ? true : false
+    ad.ldap.search(filter: filter, size: 1).size > 0
   end
 
   # Check user validity by configured attribute, useraccountcontrol flags and pwdlastset attribute
@@ -26,7 +26,7 @@ module Jackad
     filter_by_uac = ~Net::LDAP::Filter.construct('useraccountcontrol:1.2.840.113556.1.4.803:=2')
     filter_by_pass = ~Net::LDAP::Filter.eq('pwdlastset', '0')
     filter = filter_by_attr & filter_by_uac & filter_by_pass
-    ad.ldap.search(filter: filter, size: 1).size > 0 ? true : false
+    ad.ldap.search(filter: filter, size: 1).size > 0 ?
   end
 
 end
